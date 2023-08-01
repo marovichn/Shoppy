@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -8,25 +9,32 @@ interface layoutProps {
   params: { storeId: string };
 }
 
-const layout: FC<layoutProps> = async ({children, params}) => {
-const {userId} = auth();
+const layout: FC<layoutProps> = async ({ children, params }) => {
+  const { userId } = auth();
 
-if(!userId){
-redirect("/sign-in")    
-}
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
-const store = await prismadb.store.findFirst({
-    where:{
-        id: params.storeId,
-        userId
-    }
-})
+  const store = await prismadb.store.findFirst({
+    where: {
+      id: params.storeId,
+      userId,
+    },
+  });
 
-if(!store){
+  const stores = await prismadb.store.findMany();
+
+  if (!store) {
     redirect("/");
-}
+  }
 
-  return <><div>Navbar</div>{children}</>;
+  return (
+    <>
+      <Navbar items={stores} />
+      {children}
+    </>
+  );
 };
 
 export default layout;
