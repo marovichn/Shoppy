@@ -23,15 +23,13 @@ const layout: FC<layoutProps> = async ({ children, params }) => {
     },
   });
 
-  const stores = await prismadb.store.findMany();
-
   if (!store) {
     redirect("/");
   }
 
   return (
     <>
-      <Navbar items={stores} />
+      <Navbar />
       {children}
     </>
   );
