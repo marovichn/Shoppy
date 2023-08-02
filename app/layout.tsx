@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Admin Dashboard",
   description: "Administration Dashboard",
+  icons: ["/favicon.ico"],
 };
 
 export default function RootLayout({
@@ -22,8 +23,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body className={inter.className}>
-          <ToastProvider/>
-          <ModalProvider/>
+          <ToastProvider />
+          <ModalProvider />
           {children}
         </body>
       </html>

@@ -32,18 +32,24 @@ const ApiAlert: FC<ApiAlertProps> = ({
         toast.success("API route copied to clipbiard")
     }
   return (
-    <Alert>
+    <Alert className='min-[0px]:max-[460px]:pb-24'>
       <ServerIcon className='h-4 w-4 mt-[0.2rem]' />
       <AlertTitle className='flex items-center gap-x-2'>
         {title}
-        <Badge className="ml-2" variant={variantMap[variant]}>{textMap[variant]}</Badge>
+        <Badge className='ml-2' variant={variantMap[variant]}>
+          {textMap[variant]}
+        </Badge>
       </AlertTitle>
-      <AlertDescription className="mt-4 flex items-center justify-between">
-        <code className="relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono font-semibold text-sm">
-            {description}
+      <AlertDescription className='mt-4 flex items-center justify-between min-[0px]:max-[460px]:absolute min-[0px]:max-[460px]:-left-6 min-[0px]:max-[460px]:mr-2'>
+        <code className='relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono font-semibold text-sm w-full min-[0px]:max-[460px]:text-xs'>
+          {description}
         </code>
-        <Button variant="outline" size="icon">
-            <Copy className="h-4 w-4" onClick={onCopy}></Copy>
+        <Button
+          variant='outline'
+          size='icon'
+          className='ml-2 min-[0px]:max-[460px]:absolute min-[0px]:max-[460px]:-top-12 min-[0px]:max-[460px]:right-2'
+        >
+          <Copy className='h-4 w-4 ' onClick={onCopy}></Copy>
         </Button>
       </AlertDescription>
     </Alert>
