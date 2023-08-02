@@ -74,6 +74,7 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
       }
 
       router.refresh();
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (err) {
       toast.error("Something went wrong!");
@@ -90,6 +91,7 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
       );
 
       router.refresh();
+      router.push(`/${params.storeId}/billboard`)
       toast.success("Billboard deleted successfully");
     } catch (err) {
       toast.error(
@@ -176,7 +178,6 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 };
