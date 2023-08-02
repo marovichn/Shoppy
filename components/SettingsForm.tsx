@@ -18,6 +18,9 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -32,6 +35,8 @@ type SettingsFormValues = z.infer<typeof formSchema>;
 const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const router = useRouter();
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
@@ -39,7 +44,33 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (data: SettingsFormValues) => {
-    console.log(data);
+    try {
+      setLoading(true);
+      const response = await axios.patch(`/api/stores/${params?.storeId}`, {
+        name: data.name,
+      });
+
+      router.refresh();
+      toast.success("Store has been updated!");
+    } catch (err) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteHandler = async () => {
+    try {
+      setLoading(true);
+      setOpen(true);
+      const response = await axios.delete(`/api/stores/${params?.storeId}`);
+
+      router.refresh();
+    } catch (err) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,10 +78,11 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
       <div className='flex items-center justify-between'>
         <Heading title='Settings' description='Manage Store Prefrences' />
         <Button
-          className='text-white font-bold group h-10'
+          disabled={loading}
+          className='text-white font-bold group h-10 '
           variant='destructive'
           size='sm'
-          onClick={() => {}}
+          onClick={deleteHandler}
         >
           <p className='group-hover:w-24 group-hover:text-white transition-all w-0 text-transparent'>
             Delete Store

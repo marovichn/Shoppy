@@ -39,7 +39,7 @@ const StoreModal: FC<StoreModalProps> = ({}) => {
       setLoading(true);
       const response = await axios.post("/api/stores", values);
       form.reset();
-      
+
       window.location.assign(`/${response.data.id}`);
     } catch (err) {
       toast.error("Something went wrong!");
@@ -77,18 +77,20 @@ const StoreModal: FC<StoreModalProps> = ({}) => {
                 )}
               />
               <div className='pt-6 space-x-2 flex items-center justify-end w-full'>
-                <Button
-                  disabled={loading}
-                  variant='outline'
-                  onClick={StoreModal.onClose}
-                >
-                  Cancel
-                </Button>
                 <Button disabled={loading} type='submit'>
                   Continue
                 </Button>
               </div>
             </form>
+            <div className="flex items-center justify-end absolute bottom-11 right-32"><Button
+            className="text-xs px-2 h-8"
+              disabled={loading}
+              variant='outline'
+              onClick={StoreModal.onClose}
+            >
+              Cancel
+            </Button></div>
+            
           </Form>
         </div>
       </div>
