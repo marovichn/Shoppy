@@ -97,6 +97,7 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
       );
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
