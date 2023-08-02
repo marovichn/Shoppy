@@ -21,6 +21,8 @@ import { Input } from "./ui/input";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import AlertModal from "./modals/AlertModal";
+import ApiAlert from "./ApiAlert";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -62,12 +64,12 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
   const deleteHandler = async () => {
     try {
       setLoading(true);
-      setOpen(true);
       const response = await axios.delete(`/api/stores/${params?.storeId}`);
 
       router.refresh();
+      toast.success("Store deleted successfully");
     } catch (err) {
-      toast.error("Something went wrong!");
+      toast.error("Make sure you removed all products and categories first!");
     } finally {
       setLoading(false);
     }
@@ -75,6 +77,12 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
 
   return (
     <>
+      <AlertModal
+        loading={loading}
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={deleteHandler}
+      />
       <div className='flex items-center justify-between'>
         <Heading title='Settings' description='Manage Store Prefrences' />
         <Button
@@ -82,7 +90,7 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
           className='text-white font-bold group h-10 '
           variant='destructive'
           size='sm'
-          onClick={deleteHandler}
+          onClick={() => setOpen(true)}
         >
           <p className='group-hover:w-24 group-hover:text-white transition-all w-0 text-transparent'>
             Delete Store
@@ -120,6 +128,8 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert title='NEXT_PUBLIC_API_URL' description='test' variant='public' />
     </>
   );
 };
