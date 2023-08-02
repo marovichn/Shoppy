@@ -23,6 +23,7 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "./modals/AlertModal";
 import { useOrigin } from "@/hooks/use/use-origin";
+import ImageUpload from "./ImageUpload";
 
 const formSchema = z.object({
   label: z.string().min(1),
@@ -118,6 +119,26 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
           className='space-y-8 w-full'
           onSubmit={form.handleSubmit(onSubmit)}
         >
+          <FormField
+            control={form.control}
+            name='imageUrl'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='ml-1 font-semibold'>
+                  Background Image
+                </FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className='grid grid-cols-3 gap-8'>
             <FormField
               control={form.control}
