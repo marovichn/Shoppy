@@ -1,10 +1,11 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { ImagePlus, Trash } from "lucide-react";
-import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
+import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { ImagePlus, Trash } from "lucide-react";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -13,13 +14,13 @@ interface ImageUploadProps {
   value: string[];
 }
 
-const ImageUpload: FC<ImageUploadProps> = ({
+const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled,
   onChange,
   onRemove,
   value,
 }) => {
-  const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -46,21 +47,16 @@ const ImageUpload: FC<ImageUploadProps> = ({
                 type='button'
                 onClick={() => onRemove(url)}
                 variant='destructive'
-                size='icon'
+                size='sm'
               >
                 <Trash className='h-4 w-4' />
               </Button>
             </div>
-            <Image
-              src={url}
-              fill
-              alt='Selected image'
-              className='object-cover'
-            />
+            <Image fill className='object-cover' alt='Image' src={url} />
           </div>
         ))}
       </div>
-      <CldUploadWidget onUpload={onUpload} uploadPreset='kqg1ceir'>
+      <CldUploadWidget onUpload={onUpload} uploadPreset='byodxp7d'>
         {({ open }) => {
           const onClick = () => {
             open();
@@ -73,7 +69,8 @@ const ImageUpload: FC<ImageUploadProps> = ({
               variant='secondary'
               onClick={onClick}
             >
-              <ImagePlus className='h-4 w-4 mr-2' /> Upload an Image
+              <ImagePlus className='h-4 w-4 mr-2' />
+              Upload an Image
             </Button>
           );
         }}

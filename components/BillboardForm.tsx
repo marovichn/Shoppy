@@ -1,6 +1,6 @@
 "use client";
 
-import { Billboard, Store } from "@prisma/client";
+import { Billboard } from "@prisma/client";
 import { FC, useState } from "react";
 import Heading from "./Heading";
 import { Button } from "./ui/button";
@@ -61,12 +61,20 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
   const onSubmit = async (data: BillbooardFormValues) => {
     try {
       setLoading(true);
-      const response = await axios.patch(`/api/stores/${params?.storeId}`, {
-        name: data,
-      });
+      if (initialData) {
+        await axios.patch(
+          `/api/${params?.storeId}/billboards/${params.billboardId}`,
+          { label: data.label, imageUrl: data.imageUrl }
+        );
+      } else {
+        await axios.post(`/api/${params?.storeId}/billboards`, {
+          label: data.label,
+          imageUrl: data.imageUrl,
+        });
+      }
 
       router.refresh();
-      toast.success("Store has been updated!");
+      toast.success(toastMessage);
     } catch (err) {
       toast.error("Something went wrong!");
     } finally {
@@ -77,12 +85,16 @@ const BillbooardForm: FC<BillbooardFormProps> = ({ initialData }) => {
   const deleteHandler = async () => {
     try {
       setLoading(true);
-      const response = await axios.delete(`/api/stores/${params?.storeId}`);
+      await axios.delete(
+        `/api/${params?.storeId}/billboards/${params.billboardId}`
+      );
 
       router.refresh();
-      toast.success("Store deleted successfully");
+      toast.success("Billboard deleted successfully");
     } catch (err) {
-      toast.error("Make sure you removed all products and categories first!");
+      toast.error(
+        "Make sure you removed all categories using this billboard first!"
+      );
     } finally {
       setLoading(false);
     }
