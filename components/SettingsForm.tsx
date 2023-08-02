@@ -23,6 +23,7 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "./modals/AlertModal";
 import ApiAlert from "./ApiAlert";
+import { useOrigin } from "@/hooks/use/use-origin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -35,6 +36,7 @@ const formSchema = z.object({
 type SettingsFormValues = z.infer<typeof formSchema>;
 
 const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
+  const origin = useOrigin();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -129,7 +131,11 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert title='NEXT_PUBLIC_API_URL' description='test' variant='public' />
+      <ApiAlert
+        title='NEXT_PUBLIC_API_URL'
+        description={`${origin}/api/${params.storeId}`}
+        variant='public'
+      />
     </>
   );
 };
