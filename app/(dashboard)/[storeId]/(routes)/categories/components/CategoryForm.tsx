@@ -66,16 +66,14 @@ const CategoryForm: FC<CategoryFormProps> = ({ initialData, billboards }) => {
   const onSubmit = async (data: CategoryFormValues) => {
     try {
       setLoading(true);
+      console.log("DATA", data)
       if (initialData) {
         await axios.patch(
           `/api/${params?.storeId}/categories/${params.categoryId}`,
-          { name: data.name, billboardId: data.billboardId }
+          data
         );
       } else {
-        await axios.post(`/api/${params?.storeId}/categories`, {
-          label: data.name,
-          imageUrl: data.billboardId,
-        });
+        await axios.post(`/api/${params?.storeId}/categories`, data);
       }
 
       router.refresh();

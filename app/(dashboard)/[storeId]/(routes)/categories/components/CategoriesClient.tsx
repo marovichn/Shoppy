@@ -7,8 +7,8 @@ import { CategoryColumn, columns } from "./ColumnsCategories";
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/DataTable";
 import ApiList from "@/components/ApiList";
+import { CategoryDataTable } from "./CategoriesDataTable";
 
 interface CategoryClientProps {
   data: CategoryColumn[];
@@ -32,7 +32,7 @@ const CategoryClient: FC<CategoryClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey='label' columns={columns} data={data} />
+      <CategoryDataTable searchKey='name' columns={columns} data={data} />
       <Heading title='API' description='API calls for specific categories' />
       <Separator />
       <ApiList entityName='categories' entityIdName='categoryId' />
