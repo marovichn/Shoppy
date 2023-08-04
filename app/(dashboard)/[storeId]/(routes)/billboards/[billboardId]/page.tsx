@@ -1,4 +1,4 @@
-import BillbooardForm from "@/components/BillboardForm";
+import BillboardForm from "@/components/BillboardForm";
 import prismadb from "@/lib/prismadb";
 import { FC } from "react";
 
@@ -16,7 +16,7 @@ const BillboardPage: FC<BillboardPageProps> = async ({ params }) => {
   return (
     <div className='flex-col'>
       <div className='flex-1 space-y-4 p-8 pt-6'>
-        <BillbooardForm initialData={billboard}/>
+        <BillboardForm initialData={billboard}/>
       </div>
     </div>
   );
