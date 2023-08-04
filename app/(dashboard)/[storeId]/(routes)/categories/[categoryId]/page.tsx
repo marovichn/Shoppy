@@ -4,7 +4,7 @@ import { FC } from "react";
 import CategoryForm from "../components/CategoryForm";
 
 interface CategoryPageProps {
-  params: { categoryId: string };
+  params: { categoryId: string, storeId: string};
 }
 
 const CategoryPage: FC<CategoryPageProps> = async ({ params }) => {
@@ -14,10 +14,16 @@ const CategoryPage: FC<CategoryPageProps> = async ({ params }) => {
     },
   });
 
+  const billboards = await prismadb.billboard.findMany({
+    where: {
+      storeId:params.storeId,
+    },
+  });
+
   return (
     <div className='flex-col'>
       <div className='flex-1 space-y-4 p-8 pt-6'>
-        <CategoryForm initialData={category}/>
+        <CategoryForm billboards={billboards} initialData={category}/>
       </div>
     </div>
   );
