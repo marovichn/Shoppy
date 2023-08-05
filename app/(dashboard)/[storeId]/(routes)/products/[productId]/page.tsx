@@ -1,7 +1,5 @@
 import prismadb from "@/lib/prismadb";
 import { FC } from "react";
-import CategoryForm from "../components/ProductForm";
-import ProductDorm from "../components/ProductForm";
 import ProductForm from "../components/ProductForm";
 
 interface ProductPageProps {

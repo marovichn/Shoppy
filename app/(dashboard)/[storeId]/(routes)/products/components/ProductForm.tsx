@@ -1,17 +1,17 @@
 "use client";
 
-import {
-  Image,
-  Category,
-  Color,
-  Product,
-  Size,
-} from "@prisma/client";
-import { FC, useState } from "react";
-import { PlusCircle, Trash } from "lucide-react";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { PlusCircle, Trash } from "lucide-react";
+import { Category, Color, Image, Product, Size } from "@prisma/client";
+import { useParams, useRouter } from "next/navigation";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -21,15 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "react-hot-toast";
-import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
-import { useOrigin } from "@/hooks/use/use-origin";
-import AlertModal from "@/components/modals/AlertModal";
-import Heading from "@/components/Heading";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -37,9 +29,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
+import AlertModal from "@/components/modals/AlertModal";
+import Heading from "@/components/Heading";
 import ImageUpload from "@/components/ImageUpload";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -55,31 +49,38 @@ const formSchema = z.object({
 type ProductFormValues = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
-  initialData: Product & {images: Image[]} | null;
-  categories: Category[] | null;
-  sizes: Size[] | null;
-  colors: Color[] | null;
+  initialData:
+    | (Product & {
+        images: Image[];
+      })
+    | null;
+  categories: Category[];
+  colors: Color[];
+  sizes: Size[];
 }
 
-const ProductForm: FC<ProductFormProps> = ({
+const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
   sizes,
   colors,
 }) => {
-  const origin = useOrigin();
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const title = initialData ? "Edit product" : "Create product";
-  const description = initialData ? "Edit product" : "Add a new product";
-  const toastMessage = initialData ? "Product updated" : "Added new product";
-  const action = initialData ? "Save changes" : "Create product";
+  const description = initialData ? "Edit a product." : "Add a new product";
+  const toastMessage = initialData ? "Product updated." : "Product created.";
+  const action = initialData ? "Save changes" : "Create";
 
   const defaultValues = initialData
-    ? { ...initialData, price: parseFloat(String(initialData?.price)) }
+    ? {
+        ...initialData,
+        price: parseFloat(String(initialData?.price)),
+      }
     : {
         name: "",
         images: [],
@@ -93,44 +94,39 @@ const ProductForm: FC<ProductFormProps> = ({
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   const onSubmit = async (data: ProductFormValues) => {
     try {
       setLoading(true);
-      console.log("DATA", data);
       if (initialData) {
         await axios.patch(
-          `/api/${params?.storeId}/products/${params.productId}`,
+          `/api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params?.storeId}/products`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
       }
-
       router.refresh();
       router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
-    } catch (err) {
-      toast.error("Something went wrong!");
+    } catch (error: any) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
-  const deleteHandler = async () => {
+  const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params?.storeId}/products/${params.productId}`
-      );
-
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.refresh();
       router.push(`/${params.storeId}/products`);
-      toast.success("Product deleted successfully");
-    } catch (err) {
-      toast.error("Something went wrong!");
+      toast.success("Product deleted.");
+    } catch (error: any) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -140,33 +136,29 @@ const ProductForm: FC<ProductFormProps> = ({
   return (
     <>
       <AlertModal
-        loading={loading}
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={deleteHandler}
+        onConfirm={onDelete}
+        loading={loading}
       />
       <div className='flex items-center justify-between'>
         <Heading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}
-            className='text-white font-bold group h-10 '
             variant='destructive'
             size='sm'
             onClick={() => setOpen(true)}
           >
-            <p className='group-hover:w-24 group-hover:text-white transition-all w-0 text-transparent'>
-              Delete product
-            </p>
-            <Trash className='h-4 w-4 ml-2 mr-2' />
+            <Trash className='h-4 w-4' />
           </Button>
         )}
       </div>
       <Separator />
       <Form {...form}>
         <form
-          className='space-y-8 w-full'
           onSubmit={form.handleSubmit(onSubmit)}
+          className='space-y-8 w-full'
         >
           <FormField
             control={form.control}
@@ -192,17 +184,17 @@ const ProductForm: FC<ProductFormProps> = ({
               </FormItem>
             )}
           />
-          <div className='md:grid md:grid-cols-3 gap-8 flex-col flex  gap-y-4'>
+          <div className='md:grid md:grid-cols-3 flex flex-col gap-y-5 items-left gap-8'>
             <FormField
               control={form.control}
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='ml-1 font-semibold'>Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder='Category name'
+                      placeholder='Product name'
                       {...field}
                     />
                   </FormControl>
@@ -218,7 +210,6 @@ const ProductForm: FC<ProductFormProps> = ({
                   <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input
-                      step='0.1'
                       type='number'
                       disabled={loading}
                       placeholder='9.99'
@@ -234,7 +225,7 @@ const ProductForm: FC<ProductFormProps> = ({
               name='categoryId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='ml-1 font-semibold'>Category</FormLabel>
+                  <FormLabel>Category</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -246,14 +237,14 @@ const ProductForm: FC<ProductFormProps> = ({
                         <SelectValue
                           defaultValue={field.value}
                           placeholder='Select a category'
-                        ></SelectValue>
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {categories ? (
                         categories.map((category) => (
                           <SelectItem
-                            className='p-4'
+                            className='py-4'
                             value={category.id}
                             key={category.id}
                           >
@@ -278,10 +269,10 @@ const ProductForm: FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name='categoryId'
+              name='sizeId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='ml-1 font-semibold'>Color</FormLabel>
+                  <FormLabel>Size</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -292,30 +283,28 @@ const ProductForm: FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder='Select a color'
-                        ></SelectValue>
+                          placeholder='Select a size'
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {colors ? (
-                        colors.map((color) => (
+                      {sizes ? (
+                        sizes.map((size) => (
                           <SelectItem
-                            className='px-2'
-                            value={color.id}
-                            key={color.id}
+                            value={size.id}
+                            key={size.id}
                           >
                             <div className=' flex items-center gap-x-2'>
-                              <span
-                                className='h-6 w-6 rounded-full border m-2'
-                                style={{ backgroundColor: color.value }}
-                              />
-                              <span>{color.name}</span>
+                              <span className='p-2 font-extrabold'>
+                                {size.value}
+                              </span>
+                              <span>{size.name}</span>
                             </div>
                           </SelectItem>
                         ))
                       ) : (
                         <div className='h-10 w-full'>
-                          <Link href={`/${params.storeId}/colors/new`}>
+                          <Link href={`/${params.storeId}/sizes/new`}>
                             <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
                               <PlusCircle className='h-5 w-5' />
                               New color
@@ -331,10 +320,10 @@ const ProductForm: FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name='categoryId'
+              name='colorId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='ml-1 font-semibold'>Size</FormLabel>
+                  <FormLabel>Color</FormLabel>
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
@@ -345,29 +334,30 @@ const ProductForm: FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder='Select a size'
-                        ></SelectValue>
+                          placeholder='Select a color'
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {sizes ? (
-                        sizes.map((size) => (
+                      {colors ? (
+                        colors.map((color) => (
                           <SelectItem
-                            className='px-2'
-                            value={size.id}
-                            key={size.id}
+                            className='py-4'
+                            value={color.id}
+                            key={color.id}
                           >
                             <div className=' flex items-center gap-x-2'>
-                              <span className='p-2 font-extrabold'>
-                                {size.value}
-                              </span>
-                              <span>{size.name}</span>
+                              <span
+                                className='h-5 w-5 rounded-full border m-2'
+                                style={{ backgroundColor: color.value }}
+                              />
+                              <span>{color.name}</span>
                             </div>
                           </SelectItem>
                         ))
                       ) : (
                         <div className='h-10 w-full'>
-                          <Link href={`/${params.storeId}/sizes/new`}>
+                          <Link href={`/${params.storeId}/colors/new`}>
                             <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
                               <PlusCircle className='h-5 w-5' />
                               New color
@@ -432,4 +422,5 @@ const ProductForm: FC<ProductFormProps> = ({
     </>
   );
 };
+
 export default ProductForm;
