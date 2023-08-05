@@ -4,9 +4,7 @@ import { FC } from "react";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import Heading from "@/components/Heading";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import ApiList from "@/components/ApiList";
 import { ColorDataTable } from "./OrdersDataTable";
 import { OrdersColumn, columns } from "./OrdersColumns";
 
@@ -15,18 +13,14 @@ interface OrdersClientProps {
 }
 
 const OrdersClient: FC<OrdersClientProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
   return (
     <>
-      <div className='flex items-center justify-between'>
-        <Heading
-          description='Manage orders for your store'
-          title={`Orders (${data.length})`}
-        />
-      </div>
+      <Heading
+        description='Manage orders for your store'
+        title={`Orders (${data.length})`}
+      />
       <Separator />
-      <ColorDataTable searchKey='name' columns={columns} data={data} />
+      <ColorDataTable searchKey='products' columns={columns} data={data} />
     </>
   );
 };

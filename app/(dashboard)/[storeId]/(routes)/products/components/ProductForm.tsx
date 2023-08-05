@@ -65,6 +65,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   sizes,
   colors,
 }) => {
+  console.log("CATEGORIES", categories)
   const params = useParams();
   const router = useRouter();
 
@@ -241,7 +242,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories ? (
+                      {categories.length !== 0 ? (
                         categories.map((category) => (
                           <SelectItem
                             className='py-4'
@@ -288,7 +289,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {sizes ? (
+                      {sizes.length !== 0 ? (
                         sizes.map((size) => (
                           <SelectItem
                             value={size.id}
@@ -307,7 +308,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                           <Link href={`/${params.storeId}/sizes/new`}>
                             <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
                               <PlusCircle className='h-5 w-5' />
-                              New color
+                              New size
                             </div>
                           </Link>
                         </div>
@@ -339,7 +340,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {colors ? (
+                      {colors.length !== 0 ? (
                         colors.map((color) => (
                           <SelectItem
                             className='py-4'

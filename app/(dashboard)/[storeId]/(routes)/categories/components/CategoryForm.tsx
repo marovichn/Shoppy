@@ -2,7 +2,7 @@
 
 import { Billboard, Category } from "@prisma/client";
 import { FC, useState } from "react";
-import { Trash } from "lucide-react";
+import { PlusCircle, Trash } from "lucide-react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -178,11 +179,26 @@ const CategoryForm: FC<CategoryFormProps> = ({ initialData, billboards }) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {billboards.map((bill) => (
-                        <SelectItem value={bill.id} key={bill.id}>
-                          {bill.label}
-                        </SelectItem>
-                      ))}
+                      {billboards.length !== 0 ? (
+                        billboards.map((category) => (
+                          <SelectItem
+                            className='py-4'
+                            value={category.id}
+                            key={category.id}
+                          >
+                            {category.label}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className='h-10 w-full'>
+                          <Link href={`/${params.storeId}/billboards/new`}>
+                            <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
+                              <PlusCircle className='h-5 w-5' />
+                              New billboard
+                            </div>
+                          </Link>
+                        </div>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />
