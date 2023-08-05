@@ -93,9 +93,22 @@ model Product {
   color       Color     @relation(fields: [colorId], references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  images      Image[]
 
   @@index([storeId])
   @@index([categoryId])
   @@index([sizeId])
   @@index([colorId])
+}
+
+
+model Image {
+  id          String   @id @default(uuid())
+  productId   String   
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url         String  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([productId])
 }
