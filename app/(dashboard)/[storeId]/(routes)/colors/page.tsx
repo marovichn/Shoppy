@@ -1,4 +1,3 @@
-import BillboardClient from "@/components/BillboardClient";
 import prismadb from "@/lib/prismadb";
 import { format } from "date-fns";
 import { FC } from "react";

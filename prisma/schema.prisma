@@ -95,7 +95,7 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   images      Image[]
-  orderItems      OrderItem[] 
+  orderItems  OrderItem[] 
 
   @@index([storeId])
   @@index([categoryId])
@@ -116,26 +116,26 @@ model Image {
 }
 
 model Order {
-  id String @id @default(uuid())
-  storeId String
-  store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems  OrderItem[]
-  isPaid Boolean @default(false)
-  phone String @default("")
-  address String @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String @id @default(uuid())
+  storeId      String
+  store        Store     @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems   OrderItem[]
+  isPaid       Boolean @default(false)
+  phone        String @default("")
+  address      String @default("")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
    @@index([storeId])
 }
 
 model OrderItem {
   
-  id String @id @default(uuid())
-  orderId String
-  order Order @relation(fields: [orderId], references: [id])
-  productId String
-  product Product @relation(fields: [productId], references: [id])
+  id          String @id @default(uuid())
+  orderId     String
+  order       Order @relation(fields: [orderId], references: [id])
+  productId   String
+  product     Product @relation(fields: [productId], references: [id])
 
   @@index([orderId])
   @@index([productId])

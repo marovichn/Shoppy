@@ -8,7 +8,7 @@ import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import ApiList from "@/components/ApiList";
-import { CategoryDataTable } from "./ColorsDataTable";
+import { ColorDataTable } from "./ColorsDataTable";
 
 interface ColorsClientProps {
   data: ColorColumn[];
@@ -32,8 +32,8 @@ const ColorsClient: FC<ColorsClientProps> = ({ data }) => {
         </Button>
       </div>
       <Separator />
-      <CategoryDataTable searchKey='name' columns={columns} data={data} />
-      <Heading title='API' description='API calls for specific categories' />
+      <ColorDataTable searchKey='name' columns={columns} data={data} />
+      <Heading title='API' description='API calls for specific colors' />
       <Separator />
       <ApiList entityName='colors' entityIdName='colorId' />
     </>
