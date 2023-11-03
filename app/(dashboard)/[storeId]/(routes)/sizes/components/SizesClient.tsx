@@ -19,12 +19,13 @@ const SizesClient: FC<SizesClientProps> = ({ data }) => {
   const params = useParams();
   return (
     <>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-row max-sm:flex-col max-sm:items-start'>
         <Heading
           description='Manage sizes for your store'
           title={`Sizes (${data.length})`}
         />
         <Button
+          className='max-sm:mt-5'
           onClick={() => router.push(`/${params.storeId}/sizes/new`)}
         >
           <Plus className='mr-2 h-4 w-4' />

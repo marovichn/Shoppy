@@ -19,12 +19,13 @@ const CategoryClient: FC<CategoryClientProps> = ({ data }) => {
   const params = useParams();
   return (
     <>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-row max-sm:flex-col max-sm:items-start'>
         <Heading
           description='Manage categories for your store'
           title={`Categories (${data.length})`}
         />
         <Button
+          className='max-sm:mt-5'
           onClick={() => router.push(`/${params.storeId}/categories/new`)}
         >
           <Plus className='mr-2 h-4 w-4' />

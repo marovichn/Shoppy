@@ -85,11 +85,11 @@ const SettingsForm: FC<SettingsFormProps> = ({ initialData }) => {
         onClose={() => setOpen(false)}
         onConfirm={deleteHandler}
       />
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-row max-sm:flex-col max-sm:items-start'>
         <Heading title='Settings' description='Manage Store Prefrences' />
         <Button
           disabled={loading}
-          className='text-white font-bold group h-10 '
+          className='text-white font-bold group h-10 max-sm:mt-5'
           variant='destructive'
           size='sm'
           onClick={() => setOpen(true)}

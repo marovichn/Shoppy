@@ -85,7 +85,7 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="">
+      <Button onClick={() => setOpen(true)} className=''>
         <Menu className='h-4 w-4' />
       </Button>
       <Transition.Root show={open} as='div'>
@@ -97,8 +97,8 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
           <div className='fixed inset-0 overflow-y-auto' />
 
           <div className='fixed inset-0 overflow-y-auto'>
-            <div className='absolute inset-0 overflow-y-auto'>
-              <div className='pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10'>
+            <div className='absolute inset-0 overflow-y-auto '>
+              <div className='pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-10  '>
                 <Transition.Child
                   as='div'
                   enter='transform transition ease-in-out duration-500 sm:duration-700'
@@ -108,7 +108,7 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
                   leaveFrom='translate-x-0'
                   leaveTo='-translate-x-full'
                 >
-                  <Dialog.Panel className='pointer-events-auto w-screen max-w-[200px] overflow-y-auto  h-screen '>
+                  <Dialog.Panel className='pointer-events-auto w-screen max-w-[200px] overflow-y-auto  h-screen border-r-[1px] dark:border-r-slate-500 border-r-slate-900'>
                     <div className='flex h-full flex-col overflow-y-auto dark:bg-slate-950 bg-white py-6 shadow-xl'>
                       <div className='px-4 sm:px-6'>
                         <div className='flex items-start justify-between overflow-y-auto'>
@@ -122,7 +122,10 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
                               onClick={() => setOpen(false)}
                             >
                               <span className='sr-only'>Close panel</span>
-                              <X className='dark:white h-6 w-6' aria-hidden='true' />
+                              <X
+                                className='dark:white h-6 w-6'
+                                aria-hidden='true'
+                              />
                             </button>
                           </div>
                         </div>

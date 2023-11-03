@@ -18,21 +18,24 @@ const BillboardClient: FC<BillboardClientProps> = ({data}) => {
   const params = useParams();
   return (
     <>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-row max-sm:flex-col max-sm:items-start'>
         <Heading
           description='Manage billboards for your store'
           title={`Billboards (${data.length})`}
         />
-        <Button onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
+        <Button
+          className='max-sm:mt-5'
+          onClick={() => router.push(`/${params.storeId}/billboards/new`)}
+        >
           <Plus className='mr-2 h-4 w-4' />
           Add New
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="label" columns={columns} data={data}/>
-      <Heading title="API" description="API calls for specific Billboards"/>
-      <Separator/>
-      <ApiList entityName="billboards" entityIdName="billboardId"/>
+      <DataTable searchKey='label' columns={columns} data={data} />
+      <Heading title='API' description='API calls for specific Billboards' />
+      <Separator />
+      <ApiList entityName='billboards' entityIdName='billboardId' />
     </>
   );
 };
