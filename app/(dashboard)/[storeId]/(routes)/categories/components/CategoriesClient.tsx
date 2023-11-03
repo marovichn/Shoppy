@@ -7,7 +7,7 @@ import { CategoryColumn, columns } from "./ColumnsCategories";
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import ApiList from "@/components/ApiList";
+import {ApiList} from "@/components/ApiList";
 import { CategoryDataTable } from "./CategoriesDataTable";
 
 interface CategoryClientProps {

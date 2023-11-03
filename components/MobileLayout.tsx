@@ -86,7 +86,7 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
   return (
     <>
       <Button onClick={() => setOpen(true)} className="">
-        Menu <Menu className='h-4 w-4 ml-3' />
+        <Menu className='h-4 w-4' />
       </Button>
       <Transition.Root show={open} as='div'>
         <Dialog

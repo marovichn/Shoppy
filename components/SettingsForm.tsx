@@ -22,7 +22,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "./modals/AlertModal";
-import ApiAlert from "./ApiAlert";
+import {ApiAlert} from "./ApiAlert";
 import { useOrigin } from "@/hooks/use/use-origin";
 
 interface SettingsFormProps {

@@ -7,7 +7,7 @@ import { ColorColumn, columns } from "./ColumnsColors";
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import ApiList from "@/components/ApiList";
+import { ApiList } from "@/components/ApiList";
 import { ColorDataTable } from "./ColorsDataTable";
 
 interface ColorsClientProps {
@@ -24,9 +24,7 @@ const ColorsClient: FC<ColorsClientProps> = ({ data }) => {
           description='Manage colors for your store'
           title={`Colors (${data.length})`}
         />
-        <Button
-          onClick={() => router.push(`/${params.storeId}/colors/new`)}
-        >
+        <Button onClick={() => router.push(`/${params.storeId}/colors/new`)}>
           <Plus className='mr-2 h-4 w-4' />
           Add New
         </Button>

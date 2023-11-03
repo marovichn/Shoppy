@@ -8,8 +8,7 @@ import { Separator } from "./ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { BillboardColumn, columns } from "./Columns";
 import { DataTable } from "./DataTable";
-import ApiList from "./ApiList";
-
+import {ApiList} from "./ApiList";
 interface BillboardClientProps {
   data: BillboardColumn[];
 }

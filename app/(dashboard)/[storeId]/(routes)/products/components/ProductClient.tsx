@@ -7,7 +7,7 @@ import { ProductColumn, columns } from "./ColumnsProducts";
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import ApiList from "@/components/ApiList";
+import { ApiList } from "@/components/ApiList";
 import { ProductDataTable } from "./ProductsDataTable";
 
 interface ProductClientProps {
@@ -19,12 +19,13 @@ const ProductClient: FC<ProductClientProps> = ({ data }) => {
   const params = useParams();
   return (
     <>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-row max-sm:flex-col max-sm:items-start'>
         <Heading
           description='Manage products for your store'
           title={`Products (${data.length})`}
         />
         <Button
+          className='max-sm:mt-5'
           onClick={() => router.push(`/${params.storeId}/products/new`)}
         >
           <Plus className='mr-2 h-4 w-4' />

@@ -38,8 +38,8 @@ const ProductsPage: FC<ProductsPageProps> = async ({ params }) => {
   });
 
   return (
-    <div className='flex-col min-[0px]:max-[460px]:pr-0'>
-      <div className='flex-1 space-y-4 p-8 pt-6 '>
+    <div className='overflow-x-hidden max-w-screen flex-col min-[0px]:max-[460px]:pr-0'>
+      <div className='overflow-x-hidden flex-1 space-y-4 p-8 pt-6 '>
         <ProductClient data={formattedProducts} />
       </div>
     </div>
