@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 
 interface StoreModalProps {}
 
-const formSchema = z.object({ name: z.string().min(2) });
+const formSchema = z.object({ name: z.string().min(2).max(12) });
 
 const StoreModal: FC<StoreModalProps> = ({}) => {
   const [loading, setLoading] = useState<boolean>(false);
