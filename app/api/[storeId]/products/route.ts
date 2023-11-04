@@ -21,6 +21,7 @@ export async function POST(
       sizeId,
       isFeatured,
       isArchived,
+      stockAmount
     } = body;
 
     if (!userId) {
@@ -47,6 +48,9 @@ export async function POST(
     if (!sizeId) {
       return new NextResponse("Size Id is required", { status: 400 });
     }
+    if (!stockAmount) {
+      return new NextResponse("Stock amount is required", { status: 400 });
+    }
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -72,6 +76,7 @@ export async function POST(
         sizeId,
         isFeatured,
         isArchived,
+        stockAmount,
         storeId: params.storeId,
         images: {
           createMany: {

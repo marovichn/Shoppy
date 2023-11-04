@@ -88,6 +88,7 @@ export async function PATCH(
       sizeId,
       isFeatured,
       isArchived,
+      stockAmount
     } = body;
 
     if (!userId) {
@@ -113,6 +114,9 @@ export async function PATCH(
     }
     if (!sizeId) {
       return new NextResponse("Size Id is required", { status: 400 });
+    }
+    if (!stockAmount) {
+      return new NextResponse("Stock Amount is required", { status: 400 });
     }
 
     if (!params.storeId) {
@@ -145,6 +149,7 @@ export async function PATCH(
         },
         isFeatured,
         isArchived,
+        stockAmount
       },
     });
 

@@ -96,6 +96,7 @@ model Product {
   updatedAt   DateTime  @updatedAt
   images      Image[]
   orderItems  OrderItem[] 
+  stockAmount Decimal?
 
   @@index([storeId])
   @@index([categoryId])

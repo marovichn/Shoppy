@@ -44,6 +44,7 @@ const formSchema = z.object({
   sizeId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
+  stockAmount: z.coerce.number().min(1),
 });
 
 type ProductFormValues = z.infer<typeof formSchema>;
@@ -65,7 +66,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
   sizes,
   colors,
 }) => {
-  console.log("CATEGORIES", categories)
   const params = useParams();
   const router = useRouter();
 
@@ -81,6 +81,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     ? {
         ...initialData,
         price: parseFloat(String(initialData?.price)),
+        stockAmount: parseFloat(String(initialData?.stockAmount)),
       }
     : {
         name: "",
@@ -91,6 +92,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         sizeId: "",
         isFeatured: false,
         isArchived: false,
+        stockAmount: 0,
       };
 
   const form = useForm<ProductFormValues>({
@@ -214,6 +216,27 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       type='number'
                       disabled={loading}
                       placeholder='9.99'
+                      min={1}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='stockAmount'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>In stock</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='number'
+                      disabled={loading}
+                      placeholder='2'
+                      step={1}
+                      min={1}
                       {...field}
                     />
                   </FormControl>
@@ -291,10 +314,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     <SelectContent>
                       {sizes.length !== 0 ? (
                         sizes.map((size) => (
-                          <SelectItem
-                            value={size.id}
-                            key={size.id}
-                          >
+                          <SelectItem value={size.id} key={size.id}>
                             <div className=' flex items-center gap-x-2'>
                               <span className='p-2 font-extrabold'>
                                 {size.value}
