@@ -5,9 +5,9 @@ import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": '*',
+  "Access-Control-Allow-Origin": "https://shoppy-shop.vercel.app",
   "Access-Control-Allow-Methods": "*",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Headers": "*",
 };
 
 export async function OPTIONS() {
