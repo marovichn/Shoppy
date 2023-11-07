@@ -1,7 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { format } from "date-fns";
 import { FC } from "react";
-import CategoryClient from "./components/ProductClient";
 import { ProductColumn } from "./components/ColumnsProducts";
 import ProductClient from "./components/ProductClient";
 import { formatter } from "@/lib/utils";
@@ -13,10 +12,10 @@ interface ProductsPageProps {
 const ProductsPage: FC<ProductsPageProps> = async ({ params }) => {
   const products = await prismadb.product.findMany({
     where: { storeId: params.storeId },
-    include:{
-      category:true,
-      size:true,
-      color:true
+    include: {
+      category: true,
+      size: true,
+      color: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -31,9 +30,12 @@ const ProductsPage: FC<ProductsPageProps> = async ({ params }) => {
       isArchived: product.isArchived,
       price: formatter.format(product.price.toNumber()),
       createdAt: format(product.createdAt, "MMMM do, yyyy"),
-      category:product.category.name,
-      size:product.size.name,
+      category: product.category.name,
+      size: product.size.name,
       color: product.color.value,
+      stockAmount: product.stockAmount
+        ? product.stockAmount.toNumber().toString()
+        : "1",
     };
   });
 

@@ -12,7 +12,8 @@ export type ProductColumn = {
   price: string;
   category: string,
   size: string,
-  color: string
+  color: string;
+  stockAmount:string | null;
 };
 
 export const columns: ColumnDef<ProductColumn>[] = [
@@ -56,6 +57,15 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "isArchived",
     header: "Archive",
+  },
+  {
+    accessorKey: "stockAmount",
+    header: "In Stock",
+    cell: ({ row }) => (
+      <div className='flex items-center gap-x-2'>
+        {row.original.stockAmount ? row.original.stockAmount : "1"}
+      </div>
+    ),
   },
 
   {
