@@ -71,7 +71,7 @@ export async function POST(req: Request) {
           },
           data: {
             isArchived: true,
-            stockAmount: "No more in stock",
+            stockAmount: 0,
           },
         });
       } else {
