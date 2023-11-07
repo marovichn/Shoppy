@@ -6,8 +6,8 @@ import prismadb from "@/lib/prismadb";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "https://shoppy-shop.vercel.app",
-  "Access-Control-Allow-Methods": "*",
-  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Methods": "POST, GET",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
 export async function OPTIONS() {
