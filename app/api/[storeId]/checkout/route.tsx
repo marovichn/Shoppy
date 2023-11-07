@@ -16,6 +16,7 @@ export async function OPTIONS() {
 
 export async function POST(
   req: Request,
+  res: any,
   { params }: { params: { storeId: string } }
 ) {
   const { productIds } = await req.json();
@@ -76,6 +77,15 @@ export async function POST(
       orderId: order.id,
     },
   });
+   res.setHeader(
+     "Access-Control-Allow-Origin",
+     "https://shoppy-shop.vercel.app"
+   );
+   res.setHeader(
+     "Access-Control-Allow-Methods",
+     "POST, GET, OPTIONS, PUT, DELETE"
+   );
+   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
   return NextResponse.json(
     { url: session.url },
