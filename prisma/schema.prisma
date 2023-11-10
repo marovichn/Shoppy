@@ -85,6 +85,7 @@ model Product {
   categoryId  String   
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
+  description String?
   price       Decimal
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
@@ -140,4 +141,35 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  storeId      String
+  hashedPassword    String
+  name        String
+  lastname    String
+  age         String
+  gender      String
+  favorites   Favorite[]
+  wishlist    Wishlist[]
+}
+
+model Favorite{
+  id  String    @id @default(uuid())
+  productId  String
+  userId     String
+  user       User @relation(fields:[userId],references:[id])
+
+  @@index([userId])
+}
+
+model Wishlist{
+  id  String    @id @default(uuid())
+  productId  String
+
+  userId     String
+  user       User @relation(fields:[userId],references:[id])
+
+  @@index([userId])
 }
