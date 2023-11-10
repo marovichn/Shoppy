@@ -85,7 +85,7 @@ model Product {
   categoryId  String   
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
-  description String?
+  description String   @db.VarChar(5000)  
   price       Decimal
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
@@ -97,7 +97,7 @@ model Product {
   updatedAt   DateTime  @updatedAt
   images      Image[]
   orderItems  OrderItem[] 
-  stockAmount Decimal?
+  stockAmount Decimal   @default(1)
 
   @@index([storeId])
   @@index([categoryId])
@@ -132,7 +132,6 @@ model Order {
 }
 
 model OrderItem {
-  
   id          String @id @default(uuid())
   orderId     String
   order       Order @relation(fields: [orderId], references: [id])
@@ -172,4 +171,13 @@ model Wishlist{
   user       User @relation(fields:[userId],references:[id])
 
   @@index([userId])
+}
+
+model Promocodes {
+  id                      String    @id @default(uuid())
+  codeString              String @default(uuid())
+  userAccessCode          String
+  discountPercentAmount   String
+  startDate               DateTime
+  endDate                 DateTime
 }

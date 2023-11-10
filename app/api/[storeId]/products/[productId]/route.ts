@@ -81,6 +81,7 @@ export async function PATCH(
 
     const {
       name,
+      description,
       images,
       price,
       categoryId,
@@ -118,6 +119,9 @@ export async function PATCH(
     if (!stockAmount) {
       return new NextResponse("Stock Amount is required", { status: 400 });
     }
+    if (!description) {
+      return new NextResponse("Description is required", { status: 400 });
+    }
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -140,6 +144,7 @@ export async function PATCH(
       },
       data: {
         name,
+        description,
         price,
         categoryId,
         colorId,

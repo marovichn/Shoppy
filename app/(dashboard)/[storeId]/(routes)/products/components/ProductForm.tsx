@@ -37,6 +37,7 @@ import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(1),
+  description: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
   categoryId: z.string().min(1),
@@ -85,6 +86,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       }
     : {
         name: "",
+        description: "",
         images: [],
         price: 0,
         categoryId: "",
@@ -207,16 +209,31 @@ const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder='Product description'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='price'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input
-                      type='number'
                       disabled={loading}
                       placeholder='9.99'
-                      min={1}
                       {...field}
                     />
                   </FormControl>
