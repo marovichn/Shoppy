@@ -10,6 +10,7 @@ import {
   Menu,
   Palette,
   PencilRuler,
+  Percent,
   Settings,
   Table,
   X,
@@ -70,6 +71,12 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
       label: "Orders",
       active: pathname === `/${params.storeId}/orders`,
       Icon: ArrowUpDown,
+    },
+    {
+      href: `/${params.storeId}/promos`,
+      label: "Promocodes",
+      active: pathname === `/${params.storeId}/promos`,
+      Icon: Percent,
     },
     {
       href: `/${params.storeId}/settings`,

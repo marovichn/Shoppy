@@ -152,7 +152,7 @@ model User {
   gender      String
   favorites   Favorite[]
   wishlist    Wishlist[]
-  promocodes  Promocodes[]
+  promocodes  UserPromocodes[]
 }
 
 model Favorite{
@@ -180,6 +180,16 @@ model Promocodes {
   discountPercentAmount   String
   startDate               DateTime
   endDate                 DateTime
+  storeId                 String
+}
+
+model UserPromocodes {
+  id                      String    @id @default(uuid())
+  userAccessCode          String 
+  discountPercentAmount   String
+  startDate               DateTime
+  endDate                 DateTime
+  storeId                 String
   userId String?
   user User? @relation(fields:[userId],references:[id])
   @@index([userId])
