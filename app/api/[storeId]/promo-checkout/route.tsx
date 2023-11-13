@@ -26,18 +26,16 @@ export async function POST(
     });
   }
 
-  const products = await Promise.all([
-    productIds.forEach(async (id: string) => {
-      const product = await prismadb.product.findUnique({
-        where: {
-          id,
-        },
-      });
-      return product;
-    }),
-  ]);
-
-  console.log(products);
+ const products = await Promise.all(
+   productIds.map(async (id: string) => {
+     const product = await prismadb.product.findUnique({
+       where: {
+         id,
+       },
+     });
+     return product;
+   })
+ );
 
   const productsDiscounted = products.map((product: any) => {
     return {
