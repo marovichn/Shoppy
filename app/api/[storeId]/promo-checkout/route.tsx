@@ -26,24 +26,23 @@ export async function POST(
     });
   }
 
- const products = await Promise.all(
-   productIds.map(async (id: string) => {
-     const product = await prismadb.product.findUnique({
-       where: {
-         id,
-       },
-     });
-     return product;
-   })
- );
+  const products = await Promise.all(
+    productIds.map(async (id: string) => {
+      const product = await prismadb.product.findUnique({
+        where: {
+          id,
+        },
+      });
+      return product;
+    })
+  );
 
   const productsDiscounted = products.map((product: any) => {
     return {
       ...product,
-      price: Math.ceil(
+      price:
         product.price.toNumber() -
-          product.price.toNumber() * Number(promocode.discountPercentAmount)
-      ),
+        product.price.toNumber() * Number(promocode.discountPercentAmount),
     };
   });
 
