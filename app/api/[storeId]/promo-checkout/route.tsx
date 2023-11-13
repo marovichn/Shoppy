@@ -26,19 +26,20 @@ export async function POST(
     });
   }
 
-  const productsRaw =await Promise.all([
-    productIds.forEach(async(id: string) => {
-      return await prismadb.product.findUnique({
+  const products = await Promise.all([
+    productIds.forEach(async (id: string) => {
+      const product = await prismadb.product.findUnique({
         where: {
-          id: id,
+          id,
         },
       });
+      return product;
     }),
   ]);
 
-  console.log(productsRaw)
+  console.log(products);
 
-  const products = productsRaw.map((product: any) => {
+  const productsDiscounted = products.map((product: any) => {
     return {
       ...product,
       price: Math.round(
@@ -50,7 +51,7 @@ export async function POST(
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-  products.forEach((product) => {
+  productsDiscounted.forEach((product) => {
     line_items.push({
       quantity: 1,
       price_data: {
