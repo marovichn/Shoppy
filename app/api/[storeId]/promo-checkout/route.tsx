@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
+import { Product } from "@prisma/client";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -34,7 +35,7 @@ export async function POST(
     },
   });
 
-  const products = productsRaw.map((product: any) => {
+  const products = productsRaw.map((product: Product) => {
     return {
       ...product,
       price:
@@ -53,7 +54,7 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount: product.price.toNumber() * 100,
+        unit_amount: Number(product.price) * 100,
       },
     });
   });
