@@ -38,7 +38,8 @@ export async function POST(
     return {
       ...product,
       price:
-        product.price - product.price * Number(promocode.discountPercentAmount),
+        Number(product.price) -
+        Number(product.price) * Number(promocode.discountPercentAmount),
     };
   });
 
