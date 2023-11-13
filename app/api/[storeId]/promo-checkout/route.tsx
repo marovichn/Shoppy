@@ -44,11 +44,12 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount:
+        unit_amount: Math.round(
           (product.price.toNumber() -
             product.price.toNumber() *
               Number(promocode.discountPercentAmount)) *
-          100,
+            100
+        ),
       },
     });
   });
