@@ -26,13 +26,15 @@ export async function POST(
     });
   }
 
-  const productsRaw = await prismadb.product.findMany({
-    where: {
-      id: {
-        in: productIds,
-      },
-    },
-  });
+  const productsRaw =await Promise.all([
+    productIds.forEach(async(id: string) => {
+      await prismadb.product.findMany({
+        where: {
+          id: id,
+        },
+      });
+    }),
+  ]);
 
   const products = productsRaw.map((product: any) => {
     return {
