@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
-import { Product } from "@prisma/client";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -27,21 +26,12 @@ export async function POST(
     });
   }
 
-  const productsRaw = await prismadb.product.findMany({
+  const products = await prismadb.product.findMany({
     where: {
       id: {
         in: productIds,
       },
     },
-  });
-
-  const products = productsRaw.map((product: Product) => {
-    return {
-      ...product,
-      price:
-        Number(product.price) -
-        Number(product.price) * Number(promocode.discountPercentAmount),
-    };
   });
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -54,7 +44,11 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount: product.price * 100,
+        unit_amount:
+          (product.price.toNumber() -
+            product.price.toNumber() *
+              Number(promocode.discountPercentAmount)) *
+          100,
       },
     });
   });
