@@ -36,6 +36,8 @@ export async function POST(
     }),
   ]);
 
+  console.log(productsRaw)
+
   const products = productsRaw.map((product: any) => {
     return {
       ...product,
