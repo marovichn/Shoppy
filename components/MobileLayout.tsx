@@ -13,6 +13,7 @@ import {
   Percent,
   Settings,
   Table,
+  Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -71,6 +72,12 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
       label: "Orders",
       active: pathname === `/${params.storeId}/orders`,
       Icon: ArrowUpDown,
+    },
+    {
+      href: `/${params.storeId}/users`,
+      label: "Store users",
+      active: pathname === `/${params.storeId}/users`,
+      Icon: Users,
     },
     {
       href: `/${params.storeId}/promos`,
