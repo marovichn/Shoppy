@@ -26,12 +26,22 @@ export async function POST(
     });
   }
 
-  const products = await prismadb.product.findMany({
+  const productsRaw = await prismadb.product.findMany({
     where: {
       id: {
         in: productIds,
       },
     },
+  });
+
+  const products = productsRaw.map((product: any) => {
+    return {
+      ...product,
+      price: Math.round(
+        product.price.toNumber() -
+          product.price.toNumber() * Number(promocode.discountPercentAmount)
+      ),
+    };
   });
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -44,12 +54,7 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount: Math.round(
-          (product.price.toNumber() -
-            product.price.toNumber() *
-              Number(promocode.discountPercentAmount)) *
-            100
-        ),
+        unit_amount: product.price * 100,
       },
     });
   });
