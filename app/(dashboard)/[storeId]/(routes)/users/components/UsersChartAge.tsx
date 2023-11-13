@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
-const PieChartGender = ({ data }: { data: any }) => {
+const PieChartAge= ({ data }: { data: any }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (index: number) => {
@@ -36,7 +36,14 @@ const PieChartGender = ({ data }: { data: any }) => {
 
     return (
       <g>
-        <text x={cx} y={cy} dy={8} className="text-lg" textAnchor='middle' fill={fill}>
+        <text
+          x={cx}
+          y={cy}
+          dy={8}
+          className='text-lg'
+          textAnchor='middle'
+          fill={fill}
+        >
           {payload.name}
         </text>
         <Sector
@@ -84,12 +91,9 @@ const PieChartGender = ({ data }: { data: any }) => {
 
   return (
     <>
-      <Heading
-        description='Data visualization pie'
-        title='Gender Data'
-      ></Heading>
+      <Heading description='Data visualization pie' title='Age Data'></Heading>
       <ResponsiveContainer
-        className='dark:bg-white rounded-xl border-[1px] border-[#F05454]'
+        className='dark:bg-white rounded-xl border-[1px] border-[#64CCC5]'
         width='100%'
         height={350}
       >
@@ -102,7 +106,7 @@ const PieChartGender = ({ data }: { data: any }) => {
             cy='50%'
             innerRadius={50}
             outerRadius={70}
-            fill='#F05454'
+            fill='#64CCC5'
             dataKey='value'
           />
         </PieChart>
@@ -116,12 +120,10 @@ const PieChartGender = ({ data }: { data: any }) => {
           }
         }}
       >
-        Next Gender
+        Next Age
       </Button>
     </>
   );
 };
 
-
-
-export default PieChartGender;
+export default PieChartAge;
