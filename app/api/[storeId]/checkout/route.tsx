@@ -24,13 +24,16 @@ export async function POST(
     return new NextResponse("Product ids are required", { status: 400 });
   }
 
-  const products = await prismadb.product.findMany({
-    where: {
-      id: {
-        in: productIds,
-      },
-    },
-  });
+  const products = await Promise.all(
+    productIds.map(async (id: string) => {
+      const product = await prismadb.product.findUnique({
+        where: {
+          id,
+        },
+      });
+      return product;
+    })
+  );
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
