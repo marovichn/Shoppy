@@ -85,6 +85,8 @@ model Product {
   store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId  String   
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  brandId  String   
+  brand    Brand  @relation("BrandToProduct", fields: [brandId], references: [id])
   name        String
   description String    @db.VarChar(5000) 
   price       Decimal
@@ -104,11 +106,14 @@ model Product {
   @@index([categoryId])
   @@index([sizeId])
   @@index([colorId])
+  @@index([brandId])
 }
 model Brand {
   id          String    @id @default(uuid())
   storeId     String   
   store       Store     @relation("StoreToBrand", fields: [storeId], references: [id])
+  productId   String   
+  product     Product[]  @relation("BrandToProduct")
   name        String
   description String    @db.VarChar(5000) 
   createdAt   DateTime  @default(now())
@@ -116,6 +121,7 @@ model Brand {
   images      Image[]
 
   @@index([storeId])
+  @@index([productId])
 }
 
 

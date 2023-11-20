@@ -24,13 +24,8 @@ const Navbar: FC<NavbarProps> = async ({}) => {
           <MobileLayout />
         </div>
         <StoreSwitcher items={stores} />
-        {/* <div className='lg:hidden flex items-center space-x-4'>
-          <ModeToggle />
-          <UserButton afterSignOutUrl='/' />
-        </div> */}
-
-        <MainNav className='max-lg:hidden ml-5' />
-        <div className='lg:ml-auto flex items-center space-x-4'>
+        <MainNav className='max-[1150px]:hidden ml-5' />
+        <div className='min-[1150px]:ml-auto flex items-center space-x-4'>
           <ModeToggle />
           <UserButton afterSignOutUrl='/' />
         </div>

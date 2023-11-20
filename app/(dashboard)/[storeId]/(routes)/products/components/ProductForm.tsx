@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { PlusCircle, Trash } from "lucide-react";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
+import { Brand, Category, Color, Image, Product, Size } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
@@ -43,6 +43,7 @@ const formSchema = z.object({
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
+  brandId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
   stockAmount: z.coerce.number().min(1),
@@ -59,6 +60,7 @@ interface ProductFormProps {
   categories: Category[];
   colors: Color[];
   sizes: Size[];
+  brands: Brand[];
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -66,6 +68,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   categories,
   sizes,
   colors,
+  brands
 }) => {
   const params = useParams();
   const router = useRouter();
@@ -92,6 +95,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         categoryId: "",
         colorId: "",
         sizeId: "",
+        brandId: "",
         isFeatured: false,
         isArchived: false,
         stockAmount: 0,
@@ -298,6 +302,53 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
                               <PlusCircle className='h-5 w-5' />
                               New category
+                            </div>
+                          </Link>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='brandId'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Brand</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder='Select a brand'
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {brands.length !== 0 ? (
+                        brands.map((brand) => (
+                          <SelectItem
+                            className='py-4'
+                            value={brand.id}
+                            key={brand.id}
+                          >
+                            {brand.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className='h-10 w-full'>
+                          <Link href={`/${params.storeId}/brands/new`}>
+                            <div className='w-full flex hover:bg-gray-300 transition rounded-md p-2 gap-x-2 items-center'>
+                              <PlusCircle className='h-5 w-5' />
+                              New brand
                             </div>
                           </Link>
                         </div>
