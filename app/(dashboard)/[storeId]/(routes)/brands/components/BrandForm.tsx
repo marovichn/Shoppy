@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { PlusCircle, Trash } from "lucide-react";
-import { Brand, Category, Color, Image, Product, Size } from "@prisma/client";
+import { Brand, BrandImage, Category, Color, Image, Product, Size } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ type BrandFormValues = z.infer<typeof formSchema>;
 interface BrandFormProps {
   initialData:
     | (Brand & {
-        images: Image[];
+        images: BrandImage[];
       })
     | null;
 }
