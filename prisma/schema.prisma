@@ -87,7 +87,7 @@ model Product {
   categoryId  String   
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   brandId  String   
-  brand    Brand  @relation("BrandToProduct", fields: [brandId], references: [id])
+  brand    Brand  @relation(fields: [brandId], references: [id])
   name        String
   description String    @db.VarChar(5000) 
   price       Decimal
@@ -131,7 +131,7 @@ model Brand {
   storeId     String   
   store       Store     @relation("StoreToBrand", fields: [storeId], references: [id])
   productId   String   
-  product     Product[]  @relation("BrandToProduct")
+  products    Product[]  
   name        String
   description String    @db.VarChar(5000) 
   createdAt   DateTime  @default(now())
