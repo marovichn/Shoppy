@@ -12,6 +12,7 @@ import {
   PencilRuler,
   Percent,
   Settings,
+  Slack,
   Table,
   Users,
   X,
@@ -42,6 +43,12 @@ const MobileLayout: FC<MobileLayoutProps> = ({}) => {
       label: "Products",
       active: pathname === `/${params.storeId}/products`,
       Icon: List,
+    },
+    {
+      href: `/${params.storeId}/brands`,
+      label: "Brands",
+      active: pathname === `/${params.storeId}/brands`,
+      Icon: Slack,
     },
     {
       href: `/${params.storeId}/billboards`,

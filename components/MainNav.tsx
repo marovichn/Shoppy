@@ -22,6 +22,11 @@ const MainNav = ({
       active: pathname === `/${params.storeId}/products`,
     },
     {
+      href: `/${params.storeId}/brands`,
+      label: "Brands",
+      active: pathname === `/${params.storeId}/brands`,
+    },
+    {
       href: `/${params.storeId}/billboards`,
       label: "Billboards",
       active: pathname === `/${params.storeId}/billboards`,
