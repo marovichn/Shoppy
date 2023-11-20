@@ -129,8 +129,7 @@ model Review{
 model Brand {
   id          String    @id @default(uuid())
   storeId     String   
-  store       Store     @relation("StoreToBrand", fields: [storeId], references: [id])
-  productId   String   
+  store       Store     @relation("StoreToBrand", fields: [storeId], references: [id]) 
   products    Product[]  
   name        String
   description String    @db.VarChar(5000) 
@@ -139,7 +138,6 @@ model Brand {
   images      Image[]
 
   @@index([storeId])
-  @@index([productId])
 }
 
 
