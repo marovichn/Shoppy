@@ -34,7 +34,7 @@ const ProductsPage: FC<ProductsPageProps> = async ({ params }) => {
       size: product.size.name,
       color: product.color.value,
       stockAmount: product.stockAmount
-        ? product.stockAmount.toNumber().toString()
+        ? Number(product.stockAmount).toString()
         : "1",
     };
   });

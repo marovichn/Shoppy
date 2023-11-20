@@ -50,6 +50,9 @@ export async function POST(
     if (!sizeId) {
       return new NextResponse("Size Id is required", { status: 400 });
     }
+    if (!brandId) {
+      return new NextResponse("Brand Id is required", { status: 400 });
+    }
     if (!stockAmount) {
       return new NextResponse("Stock amount is required", { status: 400 });
     }
@@ -109,6 +112,7 @@ export async function GET(
      const categoryId = searchParams.get("categoryId") || undefined;
      const colorId = searchParams.get("colorId") || undefined;
      const sizeId = searchParams.get("sizeId") || undefined;
+     const brandId = searchParams.get("brandId") || undefined;
      const isFeatured = searchParams.get("isFeatured");
 
      if (!params.storeId) {
@@ -121,6 +125,7 @@ export async function GET(
          categoryId,
          colorId,
          sizeId,
+         brandId,
          isFeatured: isFeatured ? true : undefined,
          isArchived: false,
        },

@@ -27,15 +27,15 @@ const CellAction: FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onCopy = () => {
     navigator.clipboard.writeText(data.id);
-    toast.success("Product ID copied to clipbiard");
+    toast.success("Brand ID copied to clipbiard");
   };
   const deleteHandler = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params?.storeId}/products/${data.id}`);
+      await axios.delete(`/api/${params?.storeId}/brands/${data.id}`);
 
       router.refresh();
-      toast.success("Product deleted successfully");
+      toast.success("Brand deleted successfully");
     } catch (err) {
       toast.error(
         "Something went wrong"
@@ -64,7 +64,7 @@ const CellAction: FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/products/${data.id}`)
+              router.push(`/${params.storeId}/brands/${data.id}`)
             }
           >
             <Edit className='mr-2 h-4 w-4' />

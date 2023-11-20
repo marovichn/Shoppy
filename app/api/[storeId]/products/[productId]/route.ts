@@ -89,7 +89,8 @@ export async function PATCH(
       sizeId,
       isFeatured,
       isArchived,
-      stockAmount
+      stockAmount,
+      brandId
     } = body;
 
     if (!userId) {
@@ -115,6 +116,9 @@ export async function PATCH(
     }
     if (!sizeId) {
       return new NextResponse("Size Id is required", { status: 400 });
+    }
+    if (!brandId) {
+      return new NextResponse("Brand Id is required", { status: 400 });
     }
     if (!stockAmount) {
       return new NextResponse("Stock Amount is required", { status: 400 });
@@ -143,6 +147,7 @@ export async function PATCH(
         id: params.productId,
       },
       data: {
+        brandId,
         name,
         description,
         price,

@@ -16,8 +16,9 @@ export const columns: ColumnDef<BrandColumn>[] = [
     header: "Brand Name",
   },
   {
-    accessorKey: "description",
-    header: "Brand Description",
+    id: "description",
+    header:"Brand Description",
+    cell: ({ row }) => <div>{row.original.description.slice(0, 40)}...</div>,
   },
   {
     accessorKey: "createdAt",
