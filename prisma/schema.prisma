@@ -20,6 +20,7 @@ model Store {
   sizes           Size[]      @relation("StoreToSize")
   colors          Color[]    @relation("StoreToColor")  
   orders          Order[]    @relation("StoreToOrder")
+  reviews         Review[]    @relation("StoreToReview")
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
@@ -100,6 +101,7 @@ model Product {
   updatedAt   DateTime  @updatedAt
   images      Image[]
   orderItems  OrderItem[] 
+  reviews     Review[]
   stockAmount Decimal?
 
   @@index([storeId])
@@ -107,6 +109,22 @@ model Product {
   @@index([sizeId])
   @@index([colorId])
   @@index([brandId])
+}
+
+model Review{
+  id            String   @id @default(uuid())
+  storeId       String   
+  store         Store    @relation("StoreToReview", fields: [storeId], references: [id])
+  userId        String
+  user          User     @relation("UserToReview", fields: [userId], references: [id])
+  productId     String   
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  description   String   @db.VarChar(5000)
+  value         String
+
+  @@index([storeId])
+  @@index([userId])
+  @@index([productId])
 }
 model Brand {
   id          String    @id @default(uuid())
@@ -175,6 +193,7 @@ model User {
   favorites   Favorite[]
   wishlist    Wishlist[]
   promocodes  UserPromocodes[]
+  reviews     Review[]    @relation("UserToReview")
 }
 
 model Favorite{
