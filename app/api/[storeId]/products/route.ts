@@ -22,7 +22,8 @@ export async function POST(
       sizeId,
       isFeatured,
       isArchived,
-      stockAmount
+      stockAmount,
+      brandId
     } = body;
 
     if (!userId) {
@@ -79,6 +80,7 @@ export async function POST(
         categoryId,
         colorId,
         sizeId,
+        brandId,
         isFeatured,
         isArchived,
         stockAmount,

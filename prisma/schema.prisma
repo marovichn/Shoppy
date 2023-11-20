@@ -86,13 +86,13 @@ model Product {
   store       Store     @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId  String   
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  brandId  String   
-  brand    Brand  @relation(fields: [brandId], references: [id])
   name        String
   description String    @db.VarChar(5000) 
   price       Decimal
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
+  brandId  String   
+  brand    Brand  @relation(fields: [brandId], references: [id])
   sizeId      String   
   size        Size      @relation(fields: [sizeId], references: [id])
   colorId     String    
