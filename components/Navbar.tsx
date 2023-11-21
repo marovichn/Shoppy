@@ -20,7 +20,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   return (
     <div className='border-b'>
       <div className='flex h-16 items-center max-lg:justify-between px-4 gap-x-2 overflow-x-auto'>
-        <div className='lg:hidden flex items-center space-x-4'>
+        <div className='min-[1150px]:hidden flex items-center space-x-4'>
           <MobileLayout />
         </div>
         <StoreSwitcher items={stores} />
