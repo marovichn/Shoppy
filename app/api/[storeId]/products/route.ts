@@ -134,6 +134,7 @@ export async function GET(
          category: true,
          color: true,
          size: true,
+         brand:true,
        },
        orderBy: {
          createdAt: "desc",
