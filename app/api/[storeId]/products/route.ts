@@ -134,7 +134,11 @@ export async function GET(
          category: true,
          color: true,
          size: true,
-         brand:true,
+         brand: {
+           include: {
+             images: true,
+           },
+         },
        },
        orderBy: {
          createdAt: "desc",

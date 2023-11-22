@@ -21,7 +21,11 @@ export async function GET(
         category: true,
         size: true,
         color: true,
-        brand:true,
+        brand: {
+          include: {
+            images: true,
+          },
+        },
       },
     });
 
@@ -91,7 +95,7 @@ export async function PATCH(
       isFeatured,
       isArchived,
       stockAmount,
-      brandId
+      brandId,
     } = body;
 
     if (!userId) {
@@ -160,7 +164,7 @@ export async function PATCH(
         },
         isFeatured,
         isArchived,
-        stockAmount
+        stockAmount,
       },
     });
 
