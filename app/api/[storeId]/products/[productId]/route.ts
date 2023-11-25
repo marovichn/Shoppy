@@ -26,6 +26,7 @@ export async function GET(
             images: true,
           },
         },
+        reviews:true
       },
     });
 
